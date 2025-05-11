@@ -6,6 +6,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,7 +33,19 @@ public class MainActivity extends AppCompatActivity {
 
                 new Thread(() -> {
                     String response = GeminiApiService.sendMessageToGemini(userInput);
-                    runOnUiThread(() -> textViewResponse.setText(response));
+                    try {
+                        JSONObject jsonResponse = new JSONObject(response);
+                        JSONArray candidates = jsonResponse.getJSONArray("candidates");
+                        JSONObject firstCandidate = candidates.getJSONObject(0);
+                        JSONObject content = firstCandidate.getJSONObject("content");
+                        JSONArray parts = content.getJSONArray("parts");
+                        String message = parts.getJSONObject(0).getString("text");
+
+                        runOnUiThread(() -> textViewResponse.setText(message));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        runOnUiThread(() -> textViewResponse.setText("An error occurred while parsing the response."));
+                    }
                 }).start();
             }
         });
