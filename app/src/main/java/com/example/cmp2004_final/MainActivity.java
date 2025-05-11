@@ -1,8 +1,5 @@
 package com.example.cmp2004_final;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -33,21 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
                 new Thread(() -> {
                     String response = GeminiApiService.sendMessageToGemini(userInput);
-
-                    try {
-                        JSONObject jsonResponse = new JSONObject(response);
-                        JSONArray candidates = jsonResponse.getJSONArray("candidates");
-                        JSONObject firstCandidate = candidates.getJSONObject(0);
-                        JSONObject content = firstCandidate.getJSONObject("content");
-                        JSONArray parts = content.getJSONArray("parts");
-                        String message = parts.getJSONObject(0).getString("text");
-
-                        runOnUiThread(() -> textViewResponse.setText(message));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        runOnUiThread(() -> textViewResponse.setText("Bir hata oluştu."));
-                    }
-
+                    runOnUiThread(() -> textViewResponse.setText(response));
                 }).start();
             }
         });

@@ -37,36 +37,20 @@ public class GeminiApiService {
                 os.write(input, 0, input.length);
             }
 
-            int responseCode = conn.getResponseCode();
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+            StringBuilder response = new StringBuilder();
+            String line;
 
-            if (responseCode == 200) {
-                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
-                StringBuilder response = new StringBuilder();
-                String line;
-                while ((line = br.readLine()) != null) {
-                    response.append(line.trim());
-                }
-                return parseGeminiResponse(response.toString());
-            } else {
-                return "Could not get a response. Server returned code: " + responseCode;
+            while ((line = br.readLine()) != null) {
+                response.append(line.trim());
             }
 
-        } catch (IOException e) {
-            return "Connection error: Please check your internet connection.";
-        } catch (Exception e) {
-            return "An unexpected error occurred: " + e.getMessage();
-        }
-    }
+            // JSON cevaptan sadece yanıtı çıkar (geliştirmek istersen JSON parser kullanılabilir)
+            return response.toString();
 
-    private static String parseGeminiResponse(String json) {
-        try {
-            JSONObject obj = new JSONObject(json);
-            JSONArray candidates = obj.getJSONArray("candidates");
-            JSONObject content = candidates.getJSONObject(0).getJSONObject("content");
-            JSONArray parts = content.getJSONArray("parts");
-            return parts.getJSONObject(0).getString("text").trim();
         } catch (Exception e) {
-            return "Error parsing Gemini's response.";
+            e.printStackTrace();
+            return "Bir hata oluştu: " + e.getMessage();
         }
     }
 }
