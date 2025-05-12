@@ -46,8 +46,11 @@ The project aims to combine the power of AI with intuitive mobile UI to:
 ## 🏗️ Project Structure
 
 ├── MainActivity.java # UI logic and response handling
+
 ├── GeminiApiService.java # Handles API POST requests to Gemini
+
 ├── Constants.java # Stores Gemini API key
+
 ├── res/layout/activity_main.xml # UI layout in XML
 
 2. Add Your Gemini API Key
