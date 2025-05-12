@@ -65,10 +65,13 @@ Open the project in Android Studio
 Run it on an emulator or physical device (Android 10+ recommended)
 
 💬 Sample Interaction
+
 👤 You: What is gravity?
+
 🤖 Gemini: Hello! Gravity is the invisible force that pulls things down to the ground. Like when you jump, gravity pulls you back!
 
 🔐 Security Note
+
 For demo purposes, the API key is stored in Constants.java. In production:
 
 Use encrypted storage or a secure key vault
