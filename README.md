@@ -70,14 +70,19 @@ Run it on an emulator or physical device (Android 10+ recommended)
 
 🔐 Security Note
 For demo purposes, the API key is stored in Constants.java. In production:
+
 Use encrypted storage or a secure key vault
+
 Never hardcode API keys into your source code
 
 📦 Improvements & Ideas
 Here are a few ideas to improve this project:
 
 🔊 Add Text-to-Speech for read-aloud replies
+
 🗃️ Store past chats with Room DB or Firebase
+
 🌍 Support multiple languages for diverse learners
+
 🧠 Switch between Gemini models (Pro, Flash)
 
